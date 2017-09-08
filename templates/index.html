@@ -8,13 +8,28 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
         $(document).ready(function(){
-            $("button").click(function(){
+            $(".color").click(function(){
                 $.ajax({
-                    url: '/result',
+                    url: '/request',
                     data: {color: $(this).attr("ninja")},
                     type: 'POST',
                     success: function(response) {
-                        $("img").attr("src", response);
+                        $("img").attr("src", response.source);
+                        $("h1").text(response.name)
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            })
+            $(".custom").click(function(){
+                $.ajax({
+                    url: '/request',
+                    data: {color: $("input").val()},
+                    type: 'POST',
+                    success: function(response) {
+                        $("img").attr("src", response.source);
+                        $("h1").text(response.name)
                     },
                     error: function(error) {
                         console.log(error);
@@ -25,10 +40,15 @@
     </script>
 </head>
 <body>
+    <h1></h1>
     <img src="">
-    <button ninja="red">Red</button>
-    <button ninja="blue">Blue</button>
-    <button ninja="orange">Orange</button>
-    <button ninja="purple">Purple</button>
+    <br>
+    <button class="color" ninja="red">Red</button>
+    <button class="color" ninja="blue">Blue</button>
+    <button class="color" ninja="orange">Orange</button>
+    <button class="color" ninja="purple">Purple</button>
+    <p>Or choose a custom color:</p>
+    <input type="text" name="custom">
+    <button class="custom">Enter</button>
 </body>
 </html>
